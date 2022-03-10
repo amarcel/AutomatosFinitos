@@ -5,28 +5,26 @@ package automatosfinitos;
 public class AutomatosFInitos {
 
     public static void main(String[] args) {
-        String entrada = "110351000";
+        String entrada = "1111000";
         int posicao = 0, estado = 0;
-        while (posicao < entrada.length()) {
+        int[][] transicao = {{0, 1}, {1, 0}};
+        int[] aceitacao = {1};
+         while (posicao < entrada.length()) {
             imprimeCI(entrada, estado, posicao);
-            char simbolo = entrada.charAt(posicao);
-            if (estado == 0 && simbolo == '0') {
-                estado = 0;
-            } else if (estado == 0 && simbolo == '1') {
-                estado = 1;
-            } else if (estado == 1 && simbolo == '0') {
-                estado = 1;
-            } else if (estado == 1 && simbolo == '1') {
-                estado = 0;
-            }
+            int simbolo = Integer.parseInt(
+                    entrada.substring(posicao, posicao+1) );
+            estado = transicao[estado][simbolo];
             posicao++;
         } // fim do while
         imprimeCI(entrada, estado, posicao);
-        if (estado == 1) {
-            System.out.println("Cadeia ACEITA");
-        } else {
-            System.out.println("Cadeia REJEITADA");
-        }
+        boolean aceita = false;
+        for (int i : aceitacao) {
+            if (estado == i){
+                aceita = true; break;
+            }
+        } // fim do for
+        System.out.println("Cadeia aceita? " 
+                + (aceita ? "SIM" : "NÃO"));
     } // fim da main
 
     private static void imprimeCI(String entrada, int estado, int posicao) {
